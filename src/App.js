@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./components/Header";
 import Home from "./components/Home";
 import Expenses from "./components/expense/Expenses";
@@ -26,15 +26,19 @@ function App() {
       date: new Date(2021, 5, 12),
     },
   ];
-  const passData = function (gatheredInfo) {
-    expenses.push(gatheredInfo);
+  const [prevState, setExpensesState] = useState(expenses);
+
+  const passData = (newExpense) => {
+    setExpensesState((prevState) => {
+      return [newExpense, ...prevState];
+    });
   };
   return (
     <div className="App">
       <Header />
       <Home />
       <AddNewExpenseInput onAddNewExpenseInputPass={passData} />
-      <Expenses data={expenses} />
+      <Expenses data={prevState} />
     </div>
   );
 

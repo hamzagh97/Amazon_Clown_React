@@ -17,19 +17,20 @@ function AddNewExpenseForm(props) {
   const dateChangeHandler = (e) => {
     setDateState(e.target.value);
   };
-  const gatherData = (e) => {
+  const getNewExpense = (e) => {
     e.preventDefault();
     const title = inputTitle;
-    const amount = inputAmount;
+    const amount = +inputAmount;
     const date = new Date(inputDate);
-    const gatheredInfo = { title, amount, date };
-    props.onSaveGatheredInfo(gatheredInfo);
+    const newExpense = { title, amount, date };
+    props.onSaveGatheredInfo(newExpense);
+
     setTitleState("");
     setAmountState("");
     setDateState("");
   };
   return (
-    <form onSubmit={gatherData}>
+    <form onSubmit={getNewExpense}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title</label>
@@ -62,7 +63,12 @@ function AddNewExpenseForm(props) {
       </div>
 
       <div className="new-expense__actions">
-        <button type="submit">Add Expense</button>
+        <button type="button" onClick={props.passShowButtonHandler}>
+          cancel
+        </button>
+        <button type="submit" onClick={getNewExpense}>
+          Add Expense
+        </button>
       </div>
     </form>
   );
